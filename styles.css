@@ -1,0 +1,88 @@
+* {
+     box-sizing: border-box;
+}
+
+body {
+     margin: 0;
+     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Header Styles */
+header {
+     display: flex;
+     background-image: url("./logo-grande.jpeg"), linear-gradient(to right,#FFDCEC,#FFE9F4,#FFE9F9 ,#FFFEFF);
+     background-size: contain;
+     background-repeat: no-repeat;
+     background-position: center;
+     justify-content: space-around;
+     align-items: center;
+     width: 100%;
+     height: 30vh;
+     margin: 0 0 5px 0;
+}
+@media (max-width: 1024px) {
+     header {
+          background-size: 100% 100%;
+          height: 20vh;
+     }
+}
+/* Main Styles */
+.pintar-manifesto {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+     flex: 1;
+}
+.pintar-manifesto img{
+     max-height: 50dvh;
+}
+/* Manifesto Styles */
+.manifesto {
+     color: #600039;
+     font-size: 1.4rem;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     overflow-wrap: anywhere;
+     padding: 15px;
+}
+
+.manifesto p {
+     margin: 10px 0;
+     font-weight: bold;
+}
+
+#seila {
+     cursor: pointer;
+     display: flex;
+     width: 95%;
+     justify-content: space-between;
+     font-size: 1.8rem;
+     padding-left: 3%;
+     color: #600039;
+     box-sizing: content-box;
+}
+
+#seila img {
+     height: auto;
+     width: 50px;
+}
+
+/* Canvas Styles */
+#drawing-canvas {
+     width: 100%;
+     height: 100dvh;
+     border: 0.3rem solid #600039;
+     touch-action: none;
+     user-select: none;
+     -webkit-user-select: none;
+     background-color: white;
+     cursor: crosshair;
+}
+
+footer {
+     background: linear-gradient(to bottom,transparent,pink 35%);
+     height: 160px;
+     margin-top: 30px;
+     text-align: center;
+}
