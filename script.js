@@ -50,13 +50,4 @@ document.addEventListener('DOMContentLoaded', () => {
      canvas.addEventListener('pointerleave', () => {
           isDrawing = false;
      });
-
-     // Prevent default touch behavior
-     canvas.addEventListener('touchstart', (e) => {
-          e.preventDefault();
-     });
-
-     canvas.addEventListener('touchmove', (e) => {
-          e.preventDefault();
-     });
 });
