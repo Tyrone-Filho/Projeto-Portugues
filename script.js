@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
             context.beginPath();
             context.moveTo(e.clientX - rect.left, e.clientY - rect.top);
             isDrawing = true;
+        }else{
+            canvas.style.touchAction = 'auto';
         }
     });
 
