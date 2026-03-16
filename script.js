@@ -16,8 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
      // Handle pointer events
      canvas.addEventListener('pointerdown', (e) => {
           if (e.pointerType === 'touch') {
+               canvas.style.touchAction = "auto";
                return;
           }
+          canvas.style.touchAction = "none";
           const rect = canvas.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
