@@ -1,56 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
-     const canvas = document.getElementById('drawing-canvas');
-     const context = canvas.getContext('2d');
-     let isDrawing = false;
-     canvas.width = canvas.offsetWidth;
-     canvas.height = canvas.offsetHeight;
+    const canvas = document.getElementById('drawing-canvas');
+    const context = canvas.getContext('2d');
+    let isDrawing = false;
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
 
+    canvas.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'pen') {
+            e.preventDefault();
+            // ✅ Bloqueia scroll APENAS quando a caneta toca
+            canvas.style.touchAction = 'none';
+            canvas.setPointerCapture(e.pointerId);
 
-     // Handle pointer events - apenas PEN desenha
-     canvas.addEventListener('pointerdown', (e) => {
-          if (e.pointerType === 'pen') {
-               e.preventDefault();
-               const rect = canvas.getBoundingClientRect();
-               const x = e.clientX - rect.left;
-               const y = e.clientY - rect.top;
+            const rect = canvas.getBoundingClientRect();
+            context.beginPath();
+            context.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+            isDrawing = true;
+        }
+        // Dedo/mouse: não faz nada, scroll funciona normalmente
+    });
 
-               context.beginPath();
-               context.moveTo(x, y);
-               isDrawing = true;
-          }
-          // Touch passa direto sem preventDefault, permitindo scroll
-     });
+    canvas.addEventListener('pointermove', (e) => {
+        if (e.pointerType === 'pen' && isDrawing) {
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            context.strokeStyle = '#600039';
+            context.lineWidth = 3;
+            context.lineCap = 'round';
+            context.lineJoin = 'round';
+            context.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            context.stroke();
+        }
+    });
 
-     canvas.addEventListener('pointermove', (e) => {
-          if (e.pointerType === 'pen' && isDrawing) {
-               const rect = canvas.getBoundingClientRect();
-               const x = e.clientX - rect.left;
-               const y = e.clientY - rect.top;
+    const stopDrawing = (e) => {
+        if (e.pointerType === 'pen') {
+            isDrawing = false;
+            // ✅ Restaura scroll ao levantar a caneta
+            canvas.style.touchAction = 'auto';
+        }
+    };
 
-               context.strokeStyle = '#600039';
-               context.lineWidth = 3;
-               context.lineCap = 'round';
-               context.lineJoin = 'round';
-               context.lineTo(x, y);
-               context.stroke();
-          }
-     });
-
-     canvas.addEventListener('pointerup', (e) => {
-          if (e.pointerType === 'pen') {
-               isDrawing = false;
-          }
-     });
-
-     canvas.addEventListener('pointerleave', (e) => {
-          if (e.pointerType === 'pen') {
-               isDrawing = false;
-          }
-     });
-
-     canvas.addEventListener('pointercancel', (e) => {
-          if (e.pointerType === 'pen') {
-               isDrawing = false;
-          }
-     });
+    canvas.addEventListener('pointerup', stopDrawing);
+    canvas.addEventListener('pointerleave', stopDrawing);
+    canvas.addEventListener('pointercancel', stopDrawing);
 });
