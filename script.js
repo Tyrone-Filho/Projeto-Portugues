@@ -5,19 +5,24 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
+    // ✅ Detecta o tipo ANTES de tocar, ao apenas passar por cima
+    canvas.addEventListener('pointerover', (e) => {
+        if (e.pointerType === 'pen') {
+            canvas.style.touchAction = 'none';
+        } else {
+            canvas.style.touchAction = 'auto';
+        }
+    });
+
     canvas.addEventListener('pointerdown', (e) => {
         if (e.pointerType === 'pen') {
             e.preventDefault();
-            // ✅ Bloqueia scroll APENAS quando a caneta toca
-            canvas.style.touchAction = 'none';
             canvas.setPointerCapture(e.pointerId);
-
             const rect = canvas.getBoundingClientRect();
             context.beginPath();
             context.moveTo(e.clientX - rect.left, e.clientY - rect.top);
             isDrawing = true;
         }
-        // Dedo/mouse: não faz nada, scroll funciona normalmente
     });
 
     canvas.addEventListener('pointermove', (e) => {
@@ -36,8 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const stopDrawing = (e) => {
         if (e.pointerType === 'pen') {
             isDrawing = false;
-            // ✅ Restaura scroll ao levantar a caneta
-            canvas.style.touchAction = 'auto';
         }
     };
 
